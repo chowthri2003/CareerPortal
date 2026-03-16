@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
+    "noEmitOnError": false,
+    "types": ["node"]
+  },
+  "include": ["src", "../shared schema/zod.schema/application.schema.ts", "../shared schema/zod.schema/job.schema.ts", "../shared schema/zod.schema/user.schema.ts", "src/modules/job/job.schema.ts"],
+  "exclude": ["node_modules", "dist"]
+}
