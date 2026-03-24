@@ -6,7 +6,7 @@ export default function LogoutButton() {
 
   const logout = () => {
     instance.logoutRedirect({
-      postLogoutRedirectUri: "https://career-portal-tu7u-7d84jfa4p-chowthri2003s-projects.vercel.app/sign-in",
+      postLogoutRedirectUri: "https://career-portal-ten.vercel.app/",
     });
   };
 
