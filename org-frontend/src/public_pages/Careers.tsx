@@ -3,7 +3,7 @@ import { axiosInstance } from "../lib/axios";
 import Navbar from "../components/Layout/NavBar";
 import Footer from "../components/Layout/Footer";
 import { useNavigate } from "react-router-dom";
-import { Briefcase, MapPin, Globe, Clock, ArrowRight } from "lucide-react";
+import { Briefcase, MapPin, Globe, Clock, ArrowUpRight } from "lucide-react";
 
 interface Job {
   id: number;
@@ -11,6 +11,7 @@ interface Job {
   location: string;
   jobType: string;
   workMode: string;
+  postedAt: string;
 }
 
 export default function Careers() {
@@ -20,6 +21,17 @@ export default function Careers() {
   useEffect(() => {
     axiosInstance.get("/jobs").then(res => setJobs(res.data.data));
   }, []);
+
+  const getPostedTime = (date: string) => {
+    if (!date) return "";
+
+    const diff = Date.now() - new Date(date).getTime();
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+    if (days === 0) return "Posted today";
+    if (days === 1) return "Posted 1 day ago";
+    return `Posted ${days} days ago`;
+  };
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans selection:bg-orange-100 selection:text-orange-600">
@@ -65,6 +77,10 @@ export default function Careers() {
                     <div className="flex items-center gap-1.5 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
                       <Globe size={14} className="text-orange-500" /> {job.workMode}
                     </div>
+                    <div className="flex items-center gap-1.5 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
+                      <Clock size={14} className="text-orange-500" />
+                      {getPostedTime(job.postedAt)}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -86,7 +102,7 @@ export default function Careers() {
                       clipPath: "polygon(20% 0, 100% 0, 100% 100%, 0% 100%)"
                     }}
                   >
-                    <ArrowRight size={24} strokeWidth={3} className="group-hover:translate-x-1 transition-transform duration-500" />
+                    <ArrowUpRight size={24} strokeWidth={3} className="group-hover:translate-x-1 transition-transform duration-500" />
                   </div>
                 </div>
               </div>
@@ -100,7 +116,7 @@ export default function Careers() {
           </div>
         )}
       </div>
-      <Footer/>
-    </div>   
+      <Footer />
+    </div>
   );
 }

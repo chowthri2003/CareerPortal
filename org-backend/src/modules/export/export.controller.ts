@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import XLSX from "xlsx";
 import Application from "../application/application.model.js";
 import Job from "../job/job.model.js";
+import { logger } from "../../utils/logger.js";
 
 export const exportApplicationsReport = async (req: Request, res: Response) => {
   try {
@@ -46,10 +47,23 @@ export const exportApplicationsReport = async (req: Request, res: Response) => {
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     );
 
+    logger.info("Applications report exported successfully", { 
+      recordCount: formattedData.length,
+      requestedBy: req.userId
+    });
+
     res.send(buffer);
 
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal server error" });
+  } catch (error: any) {
+
+    logger.error("Failed to export applications report", {
+      message: error.message,
+      stack: error.stack
+    });
+
+    res.status(500).json({ 
+      success: false, 
+      message: "Internal server error" 
+    });
   }
 };

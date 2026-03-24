@@ -45,7 +45,7 @@ const router = Router();
  *           example: Problem solving and clean coding
  *         status:
  *           type: string
- *           enum: [Published, Draft, Closed]
+ *           enum: [Posted, Draft, Position Filled]
  *         createdAt:
  *           type: string
  *           format: date-time
@@ -59,7 +59,7 @@ const router = Router();
  * /jobs:
  *   get:
  *     summary: Get all jobs
- *     description: Returns a list of jobs. If adminView=true, draft and closed jobs will also be returned.
+ *     description: Returns a list of jobs. If adminView=true, draft and Position Filled jobs will also be returned.
  *     tags: [Jobs]
  *     parameters:
  *       - in: query
@@ -67,7 +67,7 @@ const router = Router();
  *         required: false
  *         schema:
  *           type: boolean
- *         description: Set true to view all jobs including drafts and closed
+ *         description: Set true to view all jobs including drafts and Position Filled
  *     responses:
  *       200:
  *         description: List of jobs
@@ -206,8 +206,8 @@ router.post("/",azureAuth, protect, createJob);
  *             properties:
  *               status:
  *                 type: string
- *                 enum: [Published, Draft, Closed]
- *                 example: Published
+ *                 enum: [Posted, Draft, Position Filled]
+ *                 example: Posted
  *     responses:
  *       200:
  *         description: Job status updated

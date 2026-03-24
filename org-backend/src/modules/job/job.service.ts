@@ -6,7 +6,7 @@ export const createNewJob = async (data: CreateJobInput) => {
 };
 
 export const fetchAllJobs = async (isAdmin: boolean = false) => {
-  const whereClause = isAdmin ? {} : { status: "Published" };
+  const whereClause = isAdmin ? {} : { status: "Posted" };
 
   return await Job.findAll({
     where: whereClause,
@@ -21,6 +21,13 @@ export const fetchJobById = async (id: number) => {
 export const updateExistingJobStatus = async (id: number, status: string) => {
   const job = await Job.findByPk(id);
   if (!job) throw new Error("Job not found");
+
+ if (status === "Posted" && !job.postedAt) {
+    return await job.update({
+      status: status as any,
+      postedAt: new Date()
+    });
+  }  
   return await job.update({ status: status as any });
 };
 

@@ -3,7 +3,7 @@ import { storageService } from "./storageService.js";
 import { LocalStorage } from "./storageProviders.ts/localstorage.storageProviders.js";
 
 /**
- * Used when UPLOADING new files
+ * Use when UPLOADING new files
  * Provider comes from .env
  */
 export function getStorageProvider(): storageService {
@@ -24,7 +24,7 @@ export function getStorageProvider(): storageService {
 }
 
 /**
- * Used when DOWNLOADING existing files
+ * Use when DOWNLOADING existing files
  * Provider comes from database
  */
 export function getStorageByName(provider: string): storageService {

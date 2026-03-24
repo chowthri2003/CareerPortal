@@ -11,7 +11,8 @@ interface JobAttributes {
   roleOverview: string;
   keyRequirements: string;
   coreRequirements: string;
-  status: "Published" | "Draft" | "Closed";
+  status: "Posted" | "Draft" | "Position Filled";
+  postedAt?: Date;
 }
 
 interface JobCreationAttributes extends Optional<JobAttributes, "id" | "status"> { }
@@ -26,7 +27,8 @@ class Job extends Model<JobAttributes, JobCreationAttributes> implements JobAttr
   declare roleOverview: string;
   declare keyRequirements: string;
   declare coreRequirements: string;
-  declare status: "Published" | "Draft" | "Closed";
+  declare status: "Posted" | "Draft" | "Position Filled";
+   postedAt?: Date;
 }
 
 Job.init({
@@ -68,8 +70,13 @@ Job.init({
      allowNull: false 
     },
   status: { 
-    type: DataTypes.ENUM("Published", "Draft", "Closed"), 
-    defaultValue: "Draft" },
+    type: DataTypes.ENUM("Posted", "Draft", "Position Filled"), 
+    defaultValue: "Draft" 
+  },
+  postedAt: {
+    type: DataTypes.DATE,
+    allowNull: true
+}
 },
  { 
   sequelize, 

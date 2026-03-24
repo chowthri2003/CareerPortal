@@ -15,7 +15,7 @@ export default function Dashboard() {
     totalJobs: 0,
     totalApps: 0,
     newApps: 0,
-    publishedJobs: 0,
+    PostedJobs: 0,
     recentApplicants: []
   });
 
@@ -32,7 +32,7 @@ export default function Dashboard() {
 
         setStats({
           totalJobs: jobs.length,
-          publishedJobs: jobs.filter((j: any) => j.status === "Published").length,
+          PostedJobs: jobs.filter((j: any) => j.status === "Posted").length,
           totalApps: apps.length,
           newApps: apps.filter((a: any) => a.status === "New").length,
           recentApplicants: apps.slice(0, 5)
@@ -70,8 +70,8 @@ export default function Dashboard() {
 
   const statCards = [
     {
-      label: "Live Roles",
-      value: stats.publishedJobs,
+      label: "Posted Roles",
+      value: stats.PostedJobs,
       icon: <Briefcase size={22} />,
       color: "text-blue-600 dark:text-blue-400",
       bg: "bg-blue-500/10",

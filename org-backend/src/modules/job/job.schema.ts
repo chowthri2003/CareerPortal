@@ -12,7 +12,7 @@ export const createJobSchema = z.object({
 });
 
 export const updateJobStatusSchema = z.object({
-  status: z.enum(["Published", "Draft", "Closed"]),
+  status: z.enum(["Posted", "Draft", "Position Filled"]),
 });
 
 export type CreateJobInput = z.input<typeof createJobSchema>;

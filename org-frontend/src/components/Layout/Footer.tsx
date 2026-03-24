@@ -1,4 +1,4 @@
-import { Linkedin, Facebook, Instagram } from "lucide-react";
+import { Linkedin, Facebook } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -51,7 +51,6 @@ const Footer = () => {
             {[
               { icon: <Linkedin size={18} fill="currentColor" />, active: false },
               { icon: <Facebook size={18} fill="currentColor" />, active: false },
-              { icon: <Instagram size={18} />, active: true },
             ].map((social, idx) => (
               <div 
                 key={idx} 

@@ -1,7 +1,7 @@
 import { storageService } from "../storageService.js";
 import { v4 as uuidv4 } from "uuid";
-import path from "path";
-import fs from "fs";
+import path from "path";//for handling file paths
+import fs from "fs";//for create folders, write files, read streams
 
 export class LocalStorage implements storageService {
 
@@ -23,13 +23,13 @@ export class LocalStorage implements storageService {
   }
 
   async getDownloadUrl(fileUrl: string): Promise<string> {
-    return `http://localhost:5000${fileUrl}`;
+    return `http://localhost:4000${fileUrl}`;
   }
 
 
   async streamFile(fileUrl: string) {
     const fileName = path.basename(fileUrl);
-    const fullPath = path.join(process.cwd(), "uploads", fileName);
+    const fullPath = path.join(process.cwd(), "uploads", fileName);//process.cwd() → current project root
     
     if (!fs.existsSync(fullPath)) {
       throw new Error(`File not found at ${fullPath}`);

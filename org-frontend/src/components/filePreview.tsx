@@ -22,7 +22,7 @@ export default function ResumeViewer({ fileData, onClose, onDownload }: Props) {
     const url = URL.createObjectURL(fileData);
     urlRef.current = url;
     setObjectUrl(url);
-    setPage(1); // reset page
+    setPage(1); 
 
     return () => {
       if (urlRef.current) {

@@ -12,7 +12,7 @@ export default function CreateJob() {
   useTheme();
   const navigate = useNavigate();
   const { id } = useParams();
-  
+
   const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<CreateJobInput>({
     resolver: zodResolver(createJobSchema),
     defaultValues: {
@@ -40,7 +40,7 @@ export default function CreateJob() {
         loading: isEdit ? 'Updating job...' : 'Posting job...',
         success: () => {
           navigate("/jobs");
-          return isEdit ? 'Job updated successfully' : 'Job published successfully';
+          return isEdit ? 'Job updated successfully' : 'Job Posted successfully';
         },
         error: 'Something went wrong. Please check your fields.',
       });
@@ -61,7 +61,7 @@ export default function CreateJob() {
       <div className="flex items-center justify-between mb-10">
         <div>
           <h1 className="text-3xl font-black tracking-tight" style={{ color: "var(--color-text)" }}>
-            {id ? "Modify Posting" : "Launch New Role"}
+            {id ? "Modify Posting" : "Post New Role"}
           </h1>
           <p className="font-medium opacity-70" style={{ color: "var(--color-text)" }}>
             Define the requirements and mission for this opening
@@ -71,16 +71,16 @@ export default function CreateJob() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <div className="lg:col-span-8 space-y-6">
-          <div 
+          <div
             className="p-8 md:p-10 rounded-[2.5rem] border shadow-xl space-y-8 transition-all duration-500"
-            style={{ 
-              backgroundColor: "var(--color-primary)", 
+            style={{
+              backgroundColor: "var(--color-primary)",
               borderColor: "var(--color-primaryBorder)",
               boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.05)"
             }}
           >
             <div className="flex items-center gap-3 border-b pb-6" style={{ borderColor: "var(--color-primaryBorder)" }}>
-              <div 
+              <div
                 className="w-10 h-10 rounded-xl flex items-center justify-center"
                 style={{ backgroundColor: "var(--color-primaryLight)", color: "var(--color-accent)" }}
               >
@@ -122,15 +122,15 @@ export default function CreateJob() {
         </div>
 
         <div className="lg:col-span-4">
-          <div 
+          <div
             className="p-8 rounded-[2.5rem] border shadow-xl space-y-8 sticky top-6 transition-all duration-500"
-            style={{ 
-              backgroundColor: "var(--color-primary)", 
-              borderColor: "var(--color-primaryBorder)" 
+            style={{
+              backgroundColor: "var(--color-primary)",
+              borderColor: "var(--color-primaryBorder)"
             }}
           >
             <h2 className="text-xs font-black uppercase tracking-[0.2em] border-b pb-4" style={{ color: "var(--color-text)", opacity: 0.5, borderColor: "var(--color-primaryBorder)" }}>
-              Settings
+              Job Summary
             </h2>
 
             <div className="space-y-6">
@@ -142,18 +142,18 @@ export default function CreateJob() {
               <div className="space-y-2">
                 <label className={labelClass} style={{ color: "var(--color-text)" }}>Environment</label>
                 <select {...register("workMode")} className={inputClass + " appearance-none font-bold"} style={themedInputStyle}>
-                  <option value="On-site">Physical Office</option>
-                  <option value="Hybrid">Hybrid Work</option>
-                  <option value="Remote">100% Remote</option>
+                  {["On-site", "Hybrid", "Remote"].map(s => (
+                    <option key={s} value={s}>{s}</option>
+                  ))}
                 </select>
               </div>
 
               <div className="space-y-2">
                 <label className={labelClass} style={{ color: "var(--color-text)" }}>Contract Type</label>
                 <select {...register("jobType")} className={inputClass + " appearance-none font-bold"} style={themedInputStyle}>
-                  <option value="Full-time">Full-time Employee</option>
-                  <option value="Contract">Project Contract</option>
-                  <option value="Internship">Internship Program</option>
+                  {["Full-time", "Contract", "Internship"].map(s => (
+                    <option key={s} value={s}>{s}</option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -163,7 +163,7 @@ export default function CreateJob() {
                 type="submit"
                 disabled={isSubmitting}
                 className="w-full text-white py-4 rounded-2xl font-black text-sm transition-all active:scale-95 disabled:opacity-50 shadow-lg"
-                style={{ 
+                style={{
                   background: `linear-gradient(to right, var(--color-accent), var(--color-primaryDark))`,
                 }}
               >
@@ -173,8 +173,8 @@ export default function CreateJob() {
                 type="button"
                 onClick={() => navigate("/jobs")}
                 className="w-full py-4 rounded-2xl font-bold text-sm transition-all hover:brightness-95"
-                style={{ 
-                  backgroundColor: "var(--color-primaryLight)", 
+                style={{
+                  backgroundColor: "var(--color-primaryLight)",
                   color: "var(--color-text)",
                   opacity: 0.8
                 }}

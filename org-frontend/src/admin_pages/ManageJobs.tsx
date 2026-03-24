@@ -143,9 +143,9 @@ export default function ManageJobs() {
                         value={job.status}
                         onChange={(e) => handleStatusChange(job.id, e.target.value)}
                         className={`text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-lg border-none ring-1 ring-inset outline-none cursor-pointer transition-all ${
-                          job.status === "Published" 
+                          job.status === "Posted" 
                             ? "bg-emerald-500/10 text-emerald-500 ring-emerald-500/20" 
-                            : job.status === "Closed" 
+                            : job.status === "Position Filled" 
                             ? "bg-rose-500/10 text-rose-500 ring-rose-500/20" 
                             : "opacity-60 ring-inset"
                         }`}
@@ -155,9 +155,9 @@ export default function ManageJobs() {
                           boxShadow: "inset 0 0 0 1px var(--color-primaryBorder)"
                         } : {}}
                       >
-                        <option value="Draft">Draft</option>
-                        <option value="Published">Live</option>
-                        <option value="Closed">Closed</option>
+{["Draft", "Posted", "Position Filled"].map(s => (
+                          <option key={s} value={s}>{s}</option>
+                        ))}
                       </select>
                     </td>
                     <td className="px-6 py-4 text-right">

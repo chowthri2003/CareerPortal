@@ -297,9 +297,9 @@ export default function ApplyJob() {
                   <div className="space-y-1">
                     <label className="form-label">Gender<span className="text-orange-500">*</span></label>
                     <select {...register("gender")} className="input-field">
-                      <option value="">Select Gender</option>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
+                    {["Male", "Female", "Others"].map(s => (
+                          <option key={s} value={s}>{s}</option>
+                        ))}
                     </select>
                     {errors.gender && <p className="text-red-500 text-[10px] font-bold mt-1">{errors.gender.message}</p>}
                   </div>

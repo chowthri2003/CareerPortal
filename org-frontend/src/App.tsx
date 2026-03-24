@@ -12,6 +12,7 @@ import Dashboard from "./admin_pages/DashBoard";
 import UserManagement from "./admin_pages/Users";
 import Home from "./public_pages/Home";
 import { useTheme } from "./components/hooks/useTheme";
+import MsalTokenProvider from './auth/tokenProvider'
 
 function App() {
   useTheme();
@@ -25,7 +26,9 @@ function App() {
 
      <Route path="/" element={
         <ProtectedRoute>
-          <AdminLayout />
+          <MsalTokenProvider>
+            <AdminLayout />
+          </MsalTokenProvider>
         </ProtectedRoute>
       }>
         <Route index element={<Dashboard />} />

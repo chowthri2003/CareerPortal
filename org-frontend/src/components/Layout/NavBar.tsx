@@ -16,7 +16,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto">
         <div className="bg-white/80 backdrop-blur-md rounded-[1.5rem] border border-slate-200 shadow-xl shadow-slate-200/40 p-1.5 flex items-center justify-between">
           <Link 
-            to="/" 
+            to="/home" 
             className="bg-white px-8 py-3 flex items-center border border-slate-100 shadow-sm transition-transform active:scale-95"
             style={{ 
                 clipPath: "polygon(0 0, 88% 0, 100% 100%, 0% 100%)",
