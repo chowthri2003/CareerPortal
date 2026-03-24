@@ -3,10 +3,27 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { axiosInstance } from "../lib/axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { createJobSchema, type CreateJobInput } from "../../../org-backend/src/modules/job/job.schema"
 import { toast } from "sonner";
 import { FolderIcon, MapPin, Globe, Clock } from "lucide-react";
 import { useTheme } from "../components/hooks/useTheme";
+import { z } from "zod";
+
+export const createJobSchema = z.object({
+  title: z.string().min(3, "Title must be at least 3 characters"),
+  location: z.string().min(2, "Location is required"),
+  experienceRequired: z.string().min(1, "Experience info is required"),
+  workMode: z.enum(["On-site", "Hybrid", "Remote"]),
+  jobType: z.enum(["Full-time", "Contract", "Internship"]),
+  roleOverview: z.string().min(10, "Provide a role overview"),
+  keyRequirements: z.string().min(10, "Key requirements are required"),
+  coreRequirements: z.string().min(10, "Core requirements are required"),
+});
+
+export const updateJobStatusSchema = z.object({
+  status: z.enum(["Posted", "Draft", "Position Filled"]),
+});
+
+export type CreateJobInput = z.input<typeof createJobSchema>;
 
 export default function CreateJob() {
   useTheme();
