@@ -129,7 +129,7 @@ export default function ApplyJob() {
     if (step === 2) fieldsToValidate = ["firstName", "lastName", "email", "mobilePhone", "dateOfBirth", "gender"];
     if (step === 3) fieldsToValidate = ["totalExperience", "noticePeriod", "currentSalary", "skills"];
 
-    const isValid = step === 4 ? await trigger() : await trigger(fieldsToValidate);
+    const isValid =  await trigger(fieldsToValidate);
     if (isValid) setStep(step + 1);
   };
 
@@ -216,6 +216,7 @@ export default function ApplyJob() {
       </div>
       <div className="max-w-4xl mx-auto px-6 -mt-20 relative z-20">
         <button
+         type="button" 
           onClick={() => navigate(-1)}
           className="flex items-center gap-2 text-slate-300 hover:text-white mb-8 transition-colors font-bold text-xs uppercase tracking-widest"
         >
@@ -240,7 +241,10 @@ export default function ApplyJob() {
           ))}
         </div>
         <div className="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 border border-slate-100 overflow-hidden">
-          <form onSubmit={handleSubmit(onSubmit)} className="p-8 md:p-12">
+          <form onSubmit={handleSubmit(onSubmit)}
+           onKeyDown={(e) => {
+           if (e.key === "Enter") e.preventDefault();
+           }} className="p-8 md:p-12">
 
             {step === 1 && (
               <div className="space-y-8 animate-in slide-in-from-right-4 duration-500 text-center">

@@ -15,7 +15,10 @@ export class SupabaseStorage implements storageService {
         contentType: file.mimetype,
       });
 
-    if (error) throw new Error("Supabase upload failed");
+     if (error) {
+    console.error(" Supabase upload error:", error);
+    throw new Error(error.message);
+  }
 
     const { data } = supabase.storage
       .from("Resumes")
