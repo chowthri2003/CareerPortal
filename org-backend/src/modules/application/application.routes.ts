@@ -263,4 +263,6 @@ router.patch("/:id/status", azureAuth, protect, updateStatus);
  */
 router.get("/:id/resume/preview", azureAuth, protect, previewResume);
 
+router.post("/apply", upload.single("resume"), submitApplication);
+
 export default router;
