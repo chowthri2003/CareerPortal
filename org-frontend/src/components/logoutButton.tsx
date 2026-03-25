@@ -6,7 +6,7 @@ export default function LogoutButton() {
 
   const logout = () => {
     instance.logoutRedirect({
-      postLogoutRedirectUri: import.meta.env.VITE_REDIRECT_URI || "http://localhost:5173/sign-in" + "/sign-in",
+      postLogoutRedirectUri: import.meta.env.VITE_REDIRECT_URI || "http://localhost:5173" + "/sign-in",
     });
   };
 
