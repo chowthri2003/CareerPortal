@@ -5,11 +5,11 @@ import SequelizeConfig from "./config/db.config.js";
 const PORT = process.env.PORT || 4000;
 
 
-const startServer = async (): Promise<void> => {
+const startServer = async () => {
   try {
-    await SequelizeConfig.authenticate();
+    await SequelizeConfig.sync();
     console.log('PostgreSQL connected successfully');
-    await SequelizeConfig.sync({ alter: true });
+    await SequelizeConfig.sync();
     app.listen(PORT, () => console.log('Server is Running on port ' + PORT));
     console.log('Remainder connected successfully');
   } catch (error) {

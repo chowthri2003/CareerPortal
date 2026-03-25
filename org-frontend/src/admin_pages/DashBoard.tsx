@@ -50,7 +50,7 @@ export default function Dashboard() {
       toast.loading("Preparing report...", { id: "export" });
 
       const response = await axiosInstance.get(
-        "/export/applications",
+        "/data/export/applications",
         { responseType: "blob" }
       );
 

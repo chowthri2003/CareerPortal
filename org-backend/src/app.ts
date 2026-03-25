@@ -12,7 +12,13 @@ import { logger } from "./utils/logger.js";
 
 dotenv.config();
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://career-portal-ten.vercel.app"
+  ],
+  credentials: true
+}));
 app.use(express.json());
 app.use((req, res, next) => {
   const start = Date.now();
@@ -38,6 +44,6 @@ app.use("/uploads", express.static("uploads"));
 app.use("/api/users", userRoutes);
 app.use("/api/jobs", jobRoutes);
 app.use("/api/applications", applicationRoutes);
-app.use("/api", exportRoutes);
+app.use("/api/data", exportRoutes);
 
 export default app;
