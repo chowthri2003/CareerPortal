@@ -9,7 +9,6 @@ export const logger = winston.createLogger({
         isProduction? winston.format.json(): winston.format.simple()
     ),
     transports: [
-         new winston.transports.Console(),
          new winston.transports.File({filename: "logs/all.log",}),
          new winston.transports.File({filename: "logs/error.log",level: "error",}),
     ],
