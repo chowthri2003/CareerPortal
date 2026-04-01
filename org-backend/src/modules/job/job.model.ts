@@ -28,7 +28,7 @@ class Job extends Model<JobAttributes, JobCreationAttributes> implements JobAttr
   declare keyRequirements: string;
   declare coreRequirements: string;
   declare status: "Posted" | "Draft" | "Position Filled";
-   postedAt?: Date;
+  declare postedAt?: Date;
 }
 
 Job.init({
