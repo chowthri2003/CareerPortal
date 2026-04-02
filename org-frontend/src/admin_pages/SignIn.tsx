@@ -1,12 +1,32 @@
+import { useEffect } from "react";
 import { useMsal } from "@azure/msal-react";
 import { loginRequest } from "../auth/msalconfig";
 import { useNavigate } from "react-router-dom";
 import { UserLock } from "lucide-react";
 import msLogo from "../components/assets/msLogo.png";
+import { axiosInstance } from "../lib/axios";
 
 export default function SignInPage() {
   const { instance, accounts } = useMsal();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchHealth = async (retries = 3) => {
+      try {
+        const res = await axiosInstance.get("/health");
+        console.log("Health:", res.data);
+      } catch (err) {
+        if (retries > 0) {
+          console.log("Retrying...", retries);
+          setTimeout(() => fetchHealth(retries - 1), 2000);
+        } else {
+          console.error("Backend is down");
+        }
+      }
+    };
+
+    fetchHealth();
+  }, []);
 
   if (accounts.length) {
     navigate("/");

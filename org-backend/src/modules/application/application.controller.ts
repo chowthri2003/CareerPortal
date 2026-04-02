@@ -219,7 +219,7 @@ export const parseResume = async (req: Request, res: Response) => {
     const data = await parseResumeFromBuffer(req.file.buffer);
     
     logger.info("Resume parsed successfully using buffer");
-
+console.log(" Resume API HIT");
     return res.status(200).json({
       success: true,
       data,

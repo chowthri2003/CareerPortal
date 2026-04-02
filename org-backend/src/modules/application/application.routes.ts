@@ -4,6 +4,7 @@ import { protect } from "../../middleware/auth.middleware.js";
 import upload from "../../middleware/upload.middleware.js";
 import { azureAuth } from "../../middleware/auth.middleware.js";
 import { parseResume } from "./application.controller.js";
+import { resumeLimiter } from "../../config/rateLimiter.config.js";
 
 const router = Router();
 /**
@@ -109,7 +110,7 @@ const router = Router();
  *       400:
  *         description: Resume file required
  */
-router.post("/parse-resume", upload.single("resume"), parseResume);
+router.post("/parse-resume", resumeLimiter, upload.single("resume"), parseResume);
 /**
  * @swagger
  * /applications/apply:
