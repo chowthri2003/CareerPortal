@@ -12,7 +12,7 @@ export const getJobs = async (req: Request, res: Response) => {
     const cached = await redisclient.get(cacheKey);
 
     if (cached) {
-      console.log("⚡ CACHE HIT");
+      console.log("CACHE HIT");
       logger.info("Jobs fetched from cache", { isAdmin });
       return res.status(200).json({
         success: true,
@@ -20,7 +20,7 @@ export const getJobs = async (req: Request, res: Response) => {
         source: "cache", 
       });
     }
-      console.log("🐢 CACHE MISS");
+      console.log("CACHE MISS");
     const jobs = await fetchAllJobs(isAdmin);
     await redisclient.set(cacheKey, JSON.stringify(jobs), "EX", 60);
     logger.info("Successfully fetched all jobs", { count: jobs.length, adminView: isAdmin });
@@ -75,7 +75,19 @@ export const createJob = async (req: Request, res: Response) => {
 
 export const getSingleJob = async (req: Request, res: Response) => {
   const { id } = req.params;
+  const cacheKey = `career-portal:cache:job:${id}`; 
   try {
+    const cached = await redisclient.get(cacheKey);
+
+    if (cached) {
+      console.log("⚡ SINGLE JOB CACHE HIT");
+      return res.json({
+        success: true,
+        data: JSON.parse(cached),
+        source: "cache",
+      });
+    }
+    console.log("🐢 SINGLE JOB CACHE MISS");
     const job = await fetchJobById(Number(id));
     if (!job) {
       logger.warn(`Job not found with ID: ${id}`);
@@ -84,7 +96,7 @@ export const getSingleJob = async (req: Request, res: Response) => {
         message: "Job not found" 
       });
     }
-
+    await redisclient.set(cacheKey, JSON.stringify(job), "EX", 60);
     logger.info(`Successfully retrieved job details`, { jobId: id });
     res.json({ 
       success: true, 
@@ -112,6 +124,9 @@ export const changeJobStatus = async (req: Request, res: Response) => {
 
     const updated = await updateExistingJobStatus(Number(id), parsed.data.status);
     
+    await redisclient.del(`career-portal:cache:job:${id}`);
+    await redisclient.del("career-portal:cache:jobs:admin");
+    await redisclient.del("career-portal:cache:jobs:public");
     logger.info(`Job status updated`, { jobId: id, newStatus: parsed.data.status });
 
     res.json({ 
@@ -141,7 +156,8 @@ export const updateJob = async (req: Request, res: Response) => {
     
     const updated = await updateJobData(Number(id), parsed.data);
 
-        await redisclient.del("career-portal:cache:jobs:admin");
+    await redisclient.del(`career-portal:cache:job:${id}`);
+    await redisclient.del("career-portal:cache:jobs:admin");
     await redisclient.del("career-portal:cache:jobs:public");
     
     logger.info(`Job details updated successfully`, { jobId: id });
@@ -163,8 +179,8 @@ export const removeJob = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     await deleteJob(Number(id));
-
-        await redisclient.del("career-portal:cache:jobs:admin");
+    await redisclient.del(`career-portal:cache:job:${id}`);
+    await redisclient.del("career-portal:cache:jobs:admin");
     await redisclient.del("career-portal:cache:jobs:public");
     
     logger.info(`Job deleted successfully`, { jobId: id });

@@ -22,7 +22,7 @@ export const updateExistingJobStatus = async (id: number, status: string) => {
   const job = await Job.findByPk(id);
   if (!job) throw new Error("Job not found");
 
- if (status === "Posted" && !job.postedAt) {
+ if (status === "Posted" && job.status !=="Posted") {
     return await job.update({
       status: status as any,
       postedAt: new Date()
