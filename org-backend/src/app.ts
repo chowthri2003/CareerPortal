@@ -19,6 +19,7 @@ app.use(cors({
     credentials: true,
 }));
 app.use(express.json());
+app.set("trust proxy", 1);
 app.use((req, res, next) => {
   const start = Date.now();
 
